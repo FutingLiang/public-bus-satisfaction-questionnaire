@@ -1002,126 +1002,213 @@
     </div>
 
     <script>
-        // 全局變數儲存統計數據
-        let surveyStats = {
-            today: 0,
-            week: 0,
-            total: 0
-        };
+  // =========================
+  // 0) 可選：API 基底位址設定
+  //    - 若前端與 API 在「同一個」Vercel 專案網域：留空字串即可（用相對路徑 /api/...）
+  //    - 若前端與 API 在「不同」專案／網域：請填完整網址，例如：
+  //      const BASE_API = 'https://your-api-project.vercel.app';
+  // =========================
+  const BASE_API = '';
 
-        // 處理問卷類型變更
-        function handleSurveyTypeChange() {
-            const surveyType = document.querySelector('input[name="surveyType"]:checked').value;
-            const happinessSection = document.getElementById('happinessSection');
-            const accessibilitySection = document.getElementById('accessibilityServiceSection');
-            
-            if (surveyType === 'happiness') {
-                happinessSection.style.display = 'block';
-                // 為幸福巴士問卷的預約相關問題設置required屬性
-                const reservationInputs = happinessSection.querySelectorAll('input[type="radio"]');
-                reservationInputs.forEach(input => {
-                    if (input.name === 'hasReservation') {
-                        input.required = true;
-                    }
-                });
-            } else {
-                happinessSection.style.display = 'none';
-                // 移除幸福巴士專用問題的required屬性並清空值
-                const reservationInputs = happinessSection.querySelectorAll('input[type="radio"]:checked');
-                reservationInputs.forEach(input => {
-                    input.checked = false;
-                });
-                document.getElementById('reservationQuestions').style.display = 'none';
-            }
+  // =========================
+  // 1) 全域狀態（含避免重複送出）
+  // =========================
+  let surveyStats = {
+    today: 0,
+    week: 0,
+    total: 0
+  };
+  let submitting = false;
 
-            // 處理無障礙服務問題的顯示（僅一般市區公車顯示）
-            if (surveyType === 'regular') {
-                accessibilitySection.style.display = 'block';
-            } else {
-                accessibilitySection.style.display = 'none';
-                // 清空無障礙服務的選擇
-                const accessibilityInputs = accessibilitySection.querySelectorAll('input[type="radio"]:checked');
-                accessibilityInputs.forEach(input => {
-                    input.checked = false;
-                });
-            }
+  // =========================
+  // 2) 工具：簡單選擇器
+  // =========================
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  // =========================
+  // 3) 問卷類型切換（顯示/隱藏區塊 & required 控制）
+  // =========================
+  function handleSurveyTypeChange() {
+    const surveyType = document.querySelector('input[name="surveyType"]:checked').value;
+    const happinessSection = document.getElementById('happinessSection');
+    const accessibilitySection = document.getElementById('accessibilityServiceSection');
+
+    // 幸福巴士：預約題組顯示、基本 required（僅 hasReservation 要 required，其餘在使用者選「有」後才 required）
+    if (surveyType === 'happiness') {
+      happinessSection.style.display = 'block';
+      // 先只針對 hasReservation 設 required
+      happinessSection.querySelectorAll('input[name="hasReservation"]').forEach(input => {
+        input.required = true;
+      });
+    } else {
+      // 非幸福巴士：整區關閉 & 清空選取 & 取消 required
+      happinessSection.style.display = 'none';
+      happinessSection.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.required = false;
+        input.checked = false;
+      });
+      const rq = document.getElementById('reservationQuestions');
+      if (rq) rq.style.display = 'none';
+    }
+
+    // 無障礙服務：僅一般市區公車顯示
+    if (surveyType === 'regular') {
+      accessibilitySection.style.display = 'block';
+    } else {
+      accessibilitySection.style.display = 'none';
+      accessibilitySection.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+        input.checked = false;
+      });
+    }
+  }
+
+  // =========================
+  // 4) 幸福巴士：預約題組顯示/隱藏 + required 控制
+  // =========================
+  function toggleReservationQuestions(show) {
+    const reservationQuestions = document.getElementById('reservationQuestions');
+    const reservationInputs = reservationQuestions.querySelectorAll('input[type="radio"]');
+
+    if (show) {
+      reservationQuestions.style.display = 'block';
+      reservationInputs.forEach(input => {
+        if (['reservationMethod', 'reservationSatisfaction', 'reservationEase', 'reservationFailure'].includes(input.name)) {
+          input.required = true;
         }
+      });
+    } else {
+      reservationQuestions.style.display = 'none';
+      reservationInputs.forEach(input => {
+        input.required = false;
+        input.checked = false;
+      });
+    }
+  }
 
-        // 處理預約問題的顯示/隱藏
-        function toggleReservationQuestions(show) {
-            const reservationQuestions = document.getElementById('reservationQuestions');
-            const reservationInputs = reservationQuestions.querySelectorAll('input[type="radio"]');
-            
-            if (show) {
-                reservationQuestions.style.display = 'block';
-                // 設置required屬性
-                reservationInputs.forEach(input => {
-                    if (['reservationMethod', 'reservationSatisfaction', 'reservationEase', 'reservationFailure'].includes(input.name)) {
-                        input.required = true;
-                    }
-                });
-            } else {
-                reservationQuestions.style.display = 'none';
-                // 移除required屬性並清空選擇
-                reservationInputs.forEach(input => {
-                    input.required = false;
-                    input.checked = false;
-                });
-            }
+  // =========================
+  // 5) 表單序列化 + 依類型清理不適用欄位
+  // =========================
+  function collectSurveyData(formEl) {
+    const formData = new FormData(formEl);
+    const surveyData = {};
+
+    for (let [key, value] of formData.entries()) {
+      surveyData[key] = value;
+    }
+    // 問卷類型
+    surveyData.surveyType = document.querySelector('input[name="surveyType"]:checked').value;
+
+    // 類型差異：清理不適用欄位，避免寫入 DB 髒值
+    if (surveyData.surveyType !== 'happiness') {
+      delete surveyData.hasReservation;
+      delete surveyData.reservationMethod;
+      delete surveyData.reservationSatisfaction;
+      delete surveyData.reservationEase;
+      delete surveyData.reservationFailure;
+    }
+    if (surveyData.surveyType !== 'regular') {
+      delete surveyData.accessibilityService;
+    }
+
+    return surveyData;
+  }
+
+  // =========================
+  // 6) 表單提交處理：送到 /api/submitSurvey
+  // =========================
+  document.getElementById('surveyForm').addEventListener('submit', onSubmit);
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    if (submitting) return;
+    submitting = true;
+
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const resetBtn  = document.querySelector('button[type="button"]');
+    const originalSubmitText = submitBtn.textContent;
+
+    // UI：禁止重複點擊
+    submitBtn.disabled = true;
+    resetBtn.disabled = true;
+    submitBtn.textContent = '送出中…';
+
+    try {
+      const surveyData = collectSurveyData(e.currentTarget);
+
+      // 簡易欄位檢查（避免漏關鍵欄位）
+      const requiredKeys = ['district','routeName','operator','surveyDate','surveyTime','surveyor','surveyType'];
+      for (const k of requiredKeys) {
+        if (!surveyData[k]) {
+          throw new Error(`缺少必要欄位：${k}`);
         }
+      }
 
-        // 表單提交處理
-        document.getElementById('surveyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 收集表單資料
-            const formData = new FormData(this);
-            const surveyData = {};
-            
-            for (let [key, value] of formData.entries()) {
-                surveyData[key] = value;
-            }
-            
-            // 添加問卷類型
-            surveyData.surveyType = document.querySelector('input[name="surveyType"]:checked').value;
-            
-            console.log('問卷資料:', surveyData);
-            
-            // 更新統計數據
-            surveyStats.today++;
-            surveyStats.week++;
-            surveyStats.total++;
-            
-            updateStatistics();
-            
-            alert('問卷已提交！資料已保存到控制台。');
-            
-            // 可選：重置表單
-            // resetForm();
-        });
+      // 呼叫後端 API
+      const res = await fetch(`${BASE_API}/api/submitSurvey`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body : JSON.stringify(surveyData)
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(result?.error || '儲存失敗，請稍後再試');
+      }
 
-        // 重置表單
-        function resetForm() {
-            document.getElementById('surveyForm').reset();
-            document.querySelector('input[name="surveyType"][value="regular"]').checked = true;
-            handleSurveyTypeChange();
-            
-            // 清空所有條件顯示的區塊
-            document.getElementById('reservationQuestions').style.display = 'none';
-        }
+      // 成功提示 + 更新統計
+      alert('問卷已提交並儲存！');
+      surveyStats.today++;
+      surveyStats.week++;
+      surveyStats.total++;
+      updateStatistics();
 
-        // 更新統計顯示
-        function updateStatistics() {
-            document.getElementById('todayCount').textContent = surveyStats.today;
-            document.getElementById('weekCount').textContent = surveyStats.week;
-            document.getElementById('totalCount').textContent = surveyStats.total;
-        }
+      // 視需要重置表單（若想保留填寫內容，註解本段）
+      // resetForm();
 
-        // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            handleSurveyTypeChange();
-            updateStatistics();
-        });
-    </script>
-</body>
-</html>
+    } catch (err) {
+      console.error(err);
+      alert(err.message || '儲存失敗，請稍後再試');
+    } finally {
+      // 還原 UI 狀態
+      submitBtn.disabled = false;
+      resetBtn.disabled  = false;
+      submitBtn.textContent = originalSubmitText;
+      submitting = false;
+    }
+  }
+
+  // =========================
+  // 7) 重置表單
+  // =========================
+  function resetForm() {
+    document.getElementById('surveyForm').reset();
+    document.querySelector('input[name="surveyType"][value="regular"]').checked = true;
+    handleSurveyTypeChange();
+    // 清空條件區塊
+    const rq = document.getElementById('reservationQuestions');
+    if (rq) rq.style.display = 'none';
+  }
+
+  // =========================
+  // 8) 更新統計顯示（可改為從後端查，這裡單純前端累加）
+  // =========================
+  function updateStatistics() {
+    document.getElementById('todayCount').textContent = surveyStats.today;
+    document.getElementById('weekCount').textContent = surveyStats.week;
+    document.getElementById('totalCount').textContent = surveyStats.total;
+  }
+
+  // =========================
+  // 9) 初始化
+  // =========================
+  document.addEventListener('DOMContentLoaded', function() {
+    handleSurveyTypeChange();
+    updateStatistics();
+
+    // 綁定幸福巴士「是否預約過」的單選事件（若你原本 HTML 已加 onchange，可不必再加）
+    const hasResYes = document.querySelector('input[name="hasReservation"][value="1"]');
+    const hasResNo  = document.querySelector('input[name="hasReservation"][value="2"]');
+    if (hasResYes) hasResYes.addEventListener('change', () => toggleReservationQuestions(true));
+    if (hasResNo)  hasResNo.addEventListener('change', () => toggleReservationQuestions(false));
+  });
+</script>
