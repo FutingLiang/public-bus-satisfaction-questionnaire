@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114年桃園市轄公車營運服務品質評鑑-乘客滿意度問卷調查</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto p-6">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold text-center mb-6 text-blue-800">
+                114年桃園市轄公車營運服務品質評鑑-乘客滿意度問卷調查
+            </h1>
+
+            <!-- 問卷類型選擇 -->
+            <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-6">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">問卷類型選擇</h3>
+                </div>
+                <div class="px-6 py-4">
+                    <div class="flex space-x-4">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="surveyType" value="regular" checked class="w-4 h-4 text-blue-600" onchange="handleSurveyTypeChange()">
+                            <span class="font-medium">一般市區公車</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="surveyType" value="free" class="w-4 h-4 text-blue-600" onchange="handleSurveyTypeChange()">
+                            <span class="font-medium">免費公車</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="surveyType" value="happiness" class="w-4 h-4 text-blue-600" onchange="handleSurveyTypeChange()">
+                            <span class="font-medium">幸福巴士</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <form id="surveyForm" class="space-y-6">
+                <!-- 基本資訊 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">基本資訊</h3>
+                    </div>
+                    <div class="px-6 py-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">行政區</label>
+                            <input type="text" name="district" class="w-full p-2 border rounded-md" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">路線名稱</label>
+                            <input type="text" name="routeName" class="w-full p-2 border rounded-md" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">客運業者</label>
+                            <input type="text" name="operator" class="w-full p-2 border rounded-md" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">調查日期</label>
+                            <input type="date" name="surveyDate" class="w-full p-2 border rounded-md" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">調查時間</label>
+                            <input type="time" name="surveyTime" class="w-full p-2 border rounded-md" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">調查員</label>
+                            <input type="text" name="surveyor" class="w-full p-2 border rounded-md" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 乘車特性 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">一、乘車特性</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                1. 請問您搭乘此一路線班車大多旅次目的為？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">通勤/學</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">就醫</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">觀光</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">社交</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">購物</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="6" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">洽公</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="7" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">個人事務</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="8" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">休閒運動/娛樂</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="9" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">探訪親友/返鄉/探病</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="10" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">比賽/研習/參加活動</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="travelPurpose" value="11" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">其他</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                2. 請問您搭乘此路線班車的頻率？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="frequency" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">每週1-5次</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="frequency" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">每週至少6-10次</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="frequency" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">每月至少1次</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="frequency" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">三個月至少1次</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="frequency" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">三個月以上</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 幸福巴士預約相關問題 -->
+                <div id="happinessSection" class="bg-white border border-gray-200 rounded-lg shadow-sm" style="display: none;">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">預約服務相關</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                3. 請問您是否有預約過幸福巴士車輛？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="hasReservation" value="1" class="w-4 h-4 text-blue-600" onchange="toggleReservationQuestions(true)">
+                                    <span class="text-sm">有</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="hasReservation" value="2" class="w-4 h-4 text-blue-600" onchange="toggleReservationQuestions(false)">
+                                    <span class="text-sm">無</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="reservationQuestions" style="display: none;" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">
+                                    4. 請問您用何種管道進行幸福巴士預約？
+                                </label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationMethod" value="1" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">電話預約</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationMethod" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">在地單位預約(如里辦公室、文健站預約)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationMethod" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">Line預約</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationMethod" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">其他</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">5. 預約服務是否滿意</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationSatisfaction" value="5" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">非常滿意</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationSatisfaction" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">滿意</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationSatisfaction" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">普通</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationSatisfaction" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">不滿意</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationSatisfaction" value="1" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">非常不滿意</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">6. 是否容易預約成功</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationEase" value="5" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">非常容易</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationEase" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">容易</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationEase" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">普通</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationEase" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">不容易</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationEase" value="1" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">非常不容易</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">7. 是否有預約不到車輛的情況</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationFailure" value="0" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">無(0%)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationFailure" value="25" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">偶爾(25%)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationFailure" value="50" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">有時(50%)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationFailure" value="75" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">經常(75%)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="reservationFailure" value="100" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">總是(100%)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 候車滿意度 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">二、本次候車滿意度</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">候車時間滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitTimeSatisfaction" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitTimeSatisfaction" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitTimeSatisfaction" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitTimeSatisfaction" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitTimeSatisfaction" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">候車環境滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitEnvironmentSatisfaction" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitEnvironmentSatisfaction" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitEnvironmentSatisfaction" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitEnvironmentSatisfaction" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitEnvironmentSatisfaction" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">候車感受滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitFeelingSatisfaction" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitFeelingSatisfaction" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitFeelingSatisfaction" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitFeelingSatisfaction" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitFeelingSatisfaction" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">本次候車整體滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitOverallSatisfaction" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitOverallSatisfaction" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitOverallSatisfaction" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitOverallSatisfaction" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitOverallSatisfaction" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 乘車體驗 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">三、本次乘車體驗</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">乘車時過站不停或拒載情形</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="passStationIssue" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常嚴重</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="passStationIssue" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">嚴重</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="passStationIssue" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="passStationIssue" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">很少發生</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="passStationIssue" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">無發生</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <h4 class="font-medium">乘車時駕駛員駕車行為</h4>
+                            
+                            <div>
+                                <label class="block text-sm mb-1">變換車道</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorLaneChange" value="1" class="w-4 h-4 text-blue-600" required>
+                                        <span class="text-sm">非常嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorLaneChange" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorLaneChange" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">普通</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorLaneChange" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">很少發生</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorLaneChange" value="5" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">無發生</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm mb-1">闖紅燈</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorRedLight" value="1" class="w-4 h-4 text-blue-600" required>
+                                        <span class="text-sm">非常嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorRedLight" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorRedLight" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">普通</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorRedLight" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">很少發生</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorRedLight" value="5" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">無發生</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm mb-1">未停靠路邊或公車停靠區下車</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorImproperStop" value="1" class="w-4 h-4 text-blue-600" required>
+                                        <span class="text-sm">非常嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorImproperStop" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorImproperStop" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">普通</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorImproperStop" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">很少發生</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorImproperStop" value="5" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">無發生</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm mb-1">未待乘客上下完畢即開車</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorPrematureDeparture" value="1" class="w-4 h-4 text-blue-600" required>
+                                        <span class="text-sm">非常嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorPrematureDeparture" value="2" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">嚴重</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorPrematureDeparture" value="3" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">普通</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorPrematureDeparture" value="4" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">很少發生</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="drivingBehaviorPrematureDeparture" value="5" class="w-4 h-4 text-blue-600">
+                                        <span class="text-sm">無發生</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">駕駛員行車平穩性</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="drivingStability" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="drivingStability" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="drivingStability" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="drivingStability" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="drivingStability" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">駕駛員整體服務態度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="driverAttitude" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="driverAttitude" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="driverAttitude" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="driverAttitude" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="driverAttitude" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">車輛內部整潔滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="vehicleCleanliness" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="vehicleCleanliness" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="vehicleCleanliness" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="vehicleCleanliness" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="vehicleCleanliness" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="accessibilityServiceSection">
+                            <label class="block text-sm font-medium mb-2">無障礙服務提供滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="accessibilityService" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="accessibilityService" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="accessibilityService" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="accessibilityService" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="accessibilityService" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="accessibilityService" value="na" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不適用</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">本次搭乘整體滿意度</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="overallSatisfaction" value="5" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">非常滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="overallSatisfaction" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="overallSatisfaction" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">普通</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="overallSatisfaction" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不滿意</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="overallSatisfaction" value="1" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">非常不滿意</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他資訊 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">其他資訊</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                請問您搭乘此路線班車前往目的地時，是否有轉乘其他路線或運具？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="hasTransfer" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">是</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="hasTransfer" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">否</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                請問您本次等待公車的時間約為？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitingTime" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">5分鐘內</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitingTime" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">5-10分鐘</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitingTime" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">10-15分鐘</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="waitingTime" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">超過15分鐘</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                是否受到性別不平等待遇，如言語騷擾、歧視等情事？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="genderDiscrimination" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">有</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="genderDiscrimination" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">無</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">
+                                搭乘過程中如遇到性騷擾是否知道申訴管道？
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="harassmentComplaintKnowledge" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">知道</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="harassmentComplaintKnowledge" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不知道</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 乘客基本資料 -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">四、乘客基本資料</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">性別</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="gender" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">男性</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="gender" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">女性</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="gender" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">不提供</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="gender" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">其他</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">年齡</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">19歲以下</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">20-24歲</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">25-29歲</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">30-39歲</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">40-49歲</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="6" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">50-59歲</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="7" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">60-69歲</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="age" value="8" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">70歲以上</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">職業</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">學生</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">公、教</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">農</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">工</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">商</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="6" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">軍</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="7" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">待業或退休</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="8" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">家管</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="occupation" value="9" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">其他</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">學歷</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="education" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">小學(含以下)</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="education" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">國中</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="education" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">高中</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="education" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">大學(專科)</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="education" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">碩士以上</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">居住地</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="1" class="w-4 h-4 text-blue-600" required>
+                                    <span class="text-sm">桃園</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="2" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">中壢</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="3" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">平鎮</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="4" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">八德</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="5" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">楊梅</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="6" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">蘆竹</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="7" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">龜山</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="8" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">龍潭</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="9" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">大溪</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="10" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">大園</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="11" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">觀音</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="12" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">新屋</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="13" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">復興</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="residence" value="14" class="w-4 h-4 text-blue-600">
+                                    <span class="text-sm">其他縣市</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 提交按鈕 -->
+                <div class="flex justify-center space-x-4 pt-6">
+                    <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition-colors font-medium">
+                        提交問卷
+                    </button>
+                    <button type="button" onclick="resetForm()" class="bg-gray-500 text-white px-8 py-3 rounded-md hover:bg-gray-600 transition-colors font-medium">
+                        重置表單
+                    </button>
+                </div>
+            </form>
+
+            <!-- 數據統計區域 -->
+            <div class="bg-white border border-gray-200 rounded-lg shadow-sm mt-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">問卷統計</h3>
+                </div>
+                <div class="px-6 py-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-blue-800">今日完成問卷</h3>
+                            <p class="text-2xl font-bold text-blue-600" id="todayCount">0</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-green-800">本週完成問卷</h3>
+                            <p class="text-2xl font-bold text-green-600" id="weekCount">0</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-purple-800">總完成問卷</h3>
+                            <p class="text-2xl font-bold text-purple-600" id="totalCount">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 系統說明 -->
+            <div class="bg-white border border-gray-200 rounded-lg shadow-sm mt-6">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">系統說明</h3>
+                </div>
+                <div class="px-6 py-4">
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <p>• 本系統支援三種公車類型：一般市區公車、免費公車、幸福巴士</p>
+                        <p>• 幸福巴士問卷包含預約服務相關問題</p>
+                        <p>• 所有問題皆為必填，請確實填寫後再提交</p>
+                        <p>• 問卷資料將保存至系統資料庫供後續分析使用</p>
+                        <p>• 如有任何問題，請聯繫系統管理員</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+  // =========================
+  // 0) 可選：API 基底位址設定
+  //    - 若前端與 API 在「同一個」Vercel 專案網域：留空字串即可（用相對路徑 /api/...）
+  //    - 若前端與 API 在「不同」專案／網域：請填完整網址，例如：
+  //      const BASE_API = 'https://your-api-project.vercel.app';
+  // =========================
+  const BASE_API = '';
+
+  // =========================
+  // 1) 全域狀態（含避免重複送出）
+  // =========================
+  let surveyStats = {
+    today: 0,
+    week: 0,
+    total: 0
+  };
+  let submitting = false;
+
+  // =========================
+  // 2) 工具：簡單選擇器
+  // =========================
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  // =========================
+  // 3) 問卷類型切換（顯示/隱藏區塊 & required 控制）
+  // =========================
+  function handleSurveyTypeChange() {
+    const surveyType = document.querySelector('input[name="surveyType"]:checked').value;
+    const happinessSection = document.getElementById('happinessSection');
+    const accessibilitySection = document.getElementById('accessibilityServiceSection');
+
+    // 幸福巴士：預約題組顯示、基本 required（僅 hasReservation 要 required，其餘在使用者選「有」後才 required）
+    if (surveyType === 'happiness') {
+      happinessSection.style.display = 'block';
+      // 先只針對 hasReservation 設 required
+      happinessSection.querySelectorAll('input[name="hasReservation"]').forEach(input => {
+        input.required = true;
+      });
+    } else {
+      // 非幸福巴士：整區關閉 & 清空選取 & 取消 required
+      happinessSection.style.display = 'none';
+      happinessSection.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.required = false;
+        input.checked = false;
+      });
+      const rq = document.getElementById('reservationQuestions');
+      if (rq) rq.style.display = 'none';
+    }
+
+    // 無障礙服務：僅一般市區公車顯示
+    if (surveyType === 'regular') {
+      accessibilitySection.style.display = 'block';
+    } else {
+      accessibilitySection.style.display = 'none';
+      accessibilitySection.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+        input.checked = false;
+      });
+    }
+  }
+
+  // =========================
+  // 4) 幸福巴士：預約題組顯示/隱藏 + required 控制
+  // =========================
+  function toggleReservationQuestions(show) {
+    const reservationQuestions = document.getElementById('reservationQuestions');
+    const reservationInputs = reservationQuestions.querySelectorAll('input[type="radio"]');
+
+    if (show) {
+      reservationQuestions.style.display = 'block';
+      reservationInputs.forEach(input => {
+        if (['reservationMethod', 'reservationSatisfaction', 'reservationEase', 'reservationFailure'].includes(input.name)) {
+          input.required = true;
+        }
+      });
+    } else {
+      reservationQuestions.style.display = 'none';
+      reservationInputs.forEach(input => {
+        input.required = false;
+        input.checked = false;
+      });
+    }
+  }
+
+  // =========================
+  // 5) 表單序列化 + 依類型清理不適用欄位
+  // =========================
+  function collectSurveyData(formEl) {
+    const formData = new FormData(formEl);
+    const surveyData = {};
+
+    for (let [key, value] of formData.entries()) {
+      surveyData[key] = value;
+    }
+    // 問卷類型
+    surveyData.surveyType = document.querySelector('input[name="surveyType"]:checked').value;
+
+    // 類型差異：清理不適用欄位，避免寫入 DB 髒值
+    if (surveyData.surveyType !== 'happiness') {
+      delete surveyData.hasReservation;
+      delete surveyData.reservationMethod;
+      delete surveyData.reservationSatisfaction;
+      delete surveyData.reservationEase;
+      delete surveyData.reservationFailure;
+    }
+    if (surveyData.surveyType !== 'regular') {
+      delete surveyData.accessibilityService;
+    }
+
+    return surveyData;
+  }
+
+  // =========================
+  // 6) 表單提交處理：送到 /api/submitSurvey
+  // =========================
+  document.getElementById('surveyForm').addEventListener('submit', onSubmit);
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    if (submitting) return;
+    submitting = true;
+
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const resetBtn  = document.querySelector('button[type="button"]');
+    const originalSubmitText = submitBtn.textContent;
+
+    // UI：禁止重複點擊
+    submitBtn.disabled = true;
+    resetBtn.disabled = true;
+    submitBtn.textContent = '送出中…';
+
+    try {
+      const surveyData = collectSurveyData(e.currentTarget);
+
+      // 簡易欄位檢查（避免漏關鍵欄位）
+      const requiredKeys = ['district','routeName','operator','surveyDate','surveyTime','surveyor','surveyType'];
+      for (const k of requiredKeys) {
+        if (!surveyData[k]) {
+          throw new Error(`缺少必要欄位：${k}`);
+        }
+      }
+
+      // 呼叫後端 API
+      const res = await fetch(`${BASE_API}/api/submitSurvey`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body : JSON.stringify(surveyData)
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(result?.error || '儲存失敗，請稍後再試');
+      }
+
+      // 成功提示 + 更新統計
+      alert('問卷已提交並儲存！');
+      surveyStats.today++;
+      surveyStats.week++;
+      surveyStats.total++;
+      updateStatistics();
+
+      // 視需要重置表單（若想保留填寫內容，註解本段）
+      // resetForm();
+
+    } catch (err) {
+      console.error(err);
+      alert(err.message || '儲存失敗，請稍後再試');
+    } finally {
+      // 還原 UI 狀態
+      submitBtn.disabled = false;
+      resetBtn.disabled  = false;
+      submitBtn.textContent = originalSubmitText;
+      submitting = false;
+    }
+  }
+
+  // =========================
+  // 7) 重置表單
+  // =========================
+  function resetForm() {
+    document.getElementById('surveyForm').reset();
+    document.querySelector('input[name="surveyType"][value="regular"]').checked = true;
+    handleSurveyTypeChange();
+    // 清空條件區塊
+    const rq = document.getElementById('reservationQuestions');
+    if (rq) rq.style.display = 'none';
+  }
+
+  // =========================
+  // 8) 更新統計顯示（可改為從後端查，這裡單純前端累加）
+  // =========================
+  function updateStatistics() {
+    document.getElementById('todayCount').textContent = surveyStats.today;
+    document.getElementById('weekCount').textContent = surveyStats.week;
+    document.getElementById('totalCount').textContent = surveyStats.total;
+  }
+
+  // =========================
+  // 9) 初始化
+  // =========================
+  document.addEventListener('DOMContentLoaded', function() {
+    handleSurveyTypeChange();
+    updateStatistics();
+
+    // 綁定幸福巴士「是否預約過」的單選事件（若你原本 HTML 已加 onchange，可不必再加）
+    const hasResYes = document.querySelector('input[name="hasReservation"][value="1"]');
+    const hasResNo  = document.querySelector('input[name="hasReservation"][value="2"]');
+    if (hasResYes) hasResYes.addEventListener('change', () => toggleReservationQuestions(true));
+    if (hasResNo)  hasResNo.addEventListener('change', () => toggleReservationQuestions(false));
+  });
+</script>
